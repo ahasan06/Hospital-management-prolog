@@ -268,23 +268,6 @@ has_multiple_conditions(PatientID) :-
 find_patients_by_nurse(NurseID, PatientNames) :-
     findall(PatientName, (patient_bed(PatientID, _, NurseID), patient(PatientID, PatientName, _, _, _)), PatientNames).
 
-% Find all patients in a specific location
-find_patients_in_location(Location, PatientName) :-
-    patient(_, PatientName, _, Location, _).
-
-% Count total patients in a specific location
-count_patients_in_location(Location, Count) :-
-    findall(PatientName, patient(_, PatientName, _, Location, _), Patients),
-    length(Patients, Count).
-
-% Find patients assigned to doctors with multiple specializations
-patients_of_multiple_specialization_doctors(PatientNames) :-
-    findall(PatientName, (doctor(_, DoctorName, _, _, _, _, _, _),
-                          find_doctors_with_multiple_specializations(DoctorName),
-                          find_doctor_for_patient(PatientID, DoctorName, _, _, _, _),
-                          patient(PatientID, PatientName, _, _, _)),
-            PatientNames).
-
 
 %                      APPOINTMENT RULES
 % -----------------------------------------------------------
