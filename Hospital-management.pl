@@ -1,6 +1,6 @@
 % Doctor Fact list:
 % doctor(ID, Name, Specialization, Department, Degree, Gender, Timing)
-doctor(1, 'Dr. Arif Rahman', 'Cardiologist', 'Cardiology', 'MBBS, FCPS (Cardiology)', 'Dhaka Medical College, FCPS from Royal College of Physicians, London', male, '9:00 AM - 3:00 PM').
+doctor(1, 'Dr. Arif Rahman', 'Cardiologist', 'Cardiology', 'MBBS, FCPS (Cardiology)', 'Dhaka Medical College, FCPS from Royal College of Physicians, London', male, '9:00AM - 3:00PM').
 doctor(2, 'Dr. Tanvir Hossain', 'Neurologist', 'Neurology', 'MBBS, MD (Neurology)', 'Chittagong Medical College, MD from University of Dhaka', male, '10:00 AM - 4:00 PM').
 doctor(3, 'Dr. Nusrat Jahan', 'Pediatrician', 'Pediatrics', 'MBBS, DCH (Pediatrics)', 'Sir Salimullah Medical College, DCH from BSMMU', female, '11:00 AM - 5:00 PM').
 doctor(4, 'Dr. Khalid Hasan', 'Pulmonologist', 'Respiratory', 'MBBS, FCPS (Pulmonology)', 'Rajshahi Medical College, FCPS from Bangladesh College of Physicians and Surgeons', male, '8:00 AM - 2:00 PM').
@@ -258,7 +258,8 @@ count_patients_with_condition(Condition, Count) :-
     findall(Patient, find_patients_by_disease(Condition, Patient), Patients),
     length(Patients, Count).
 
-% Check if a patient has multiple conditions
+% Check if a patient has multiple conditions or check a patient has
+% multiple dieases
 has_multiple_conditions(PatientID) :-
     patient(PatientID, _, _, _, Conditions),
     length(Conditions, Count),
@@ -267,6 +268,15 @@ has_multiple_conditions(PatientID) :-
 % Find all patients assigned to a specific nurse
 find_patients_by_nurse(NurseID, PatientNames) :-
     findall(PatientName, (patient_bed(PatientID, _, NurseID), patient(PatientID, PatientName, _, _, _)), PatientNames).
+
+% Find all patients in a specific location
+find_patients_in_location(Location, PatientName) :-
+    patient(_, PatientName, _, Location, _).
+
+% Count total patients in a specific location
+count_patients_in_location(Location, Count) :-
+    findall(PatientName, patient(_, PatientName, _, Location, _), Patients),
+    length(Patients, Count).
 
 
 %                      APPOINTMENT RULES
@@ -324,7 +334,6 @@ available_blood_donors(BloodType, DonorNames) :-
 
 
 
-
 %                       ICU RELATED RULES
 % -----------------------------------------------------------
 
@@ -333,9 +342,6 @@ available_icu_beds(AvailableCount) :-
     findall(BedID, icu_bed_available(BedID, true), AvailableBeds),
     length(AvailableBeds, AvailableCount).
 
-% Rule to check if a specific ICU bed is available.
-is_bed_available(BedID) :-
-    icu_bed_available(BedID, true).  % Check if the bed is available.
 
 % Rule to find the IDs of all available ICU beds.
 available_beds(BedIDs) :-
@@ -393,6 +399,10 @@ nearest_ambulance(Location1, Location2, Location3, ContactNumber) :-
 
 %                     INHERITED DISEASE RULE
 % ------------------------------------------------------------
+
+% parent('Mizanur Rahman', 'Sakib Khan').
+% patient(1, 'Mizanur Rahman', 45, 'Dhaka', ['Diabetes', 'Hypertension']).
+%  ['Diabetes', 'Hypertension']
 
 % Check if a disease is inherited from parent to child
 inherited_disease(Patient, Disease) :-
