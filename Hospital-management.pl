@@ -314,10 +314,14 @@ blood_available(BloodType) :-
     blood_inventory(BloodType, Quantity),
     Quantity > 0.
 
-% Check if there is enough blood of a specific type.
-sufficient_blood(BloodType, RequiredQuantity) :-
-    blood_inventory(BloodType, Quantity),
-    Quantity >= RequiredQuantity.
+% Check available blood quantity for a specific blood type
+available_blood_quantity(BloodType, Quantity) :-
+    blood_inventory(BloodType, Quantity).
+
+% Find all donors of a specific blood type
+available_blood_donors(BloodType, DonorNames) :-
+    findall(DonorName, blood_donor(_, DonorName, BloodType, _), DonorNames).
+
 
 
 
