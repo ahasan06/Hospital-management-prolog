@@ -1,3 +1,6 @@
+% Doctor Fact list:
+% doctor(ID, Name, Specialization, Department, Degree, Gender, Timing)
+doctor(1, 'Dr. Arif Rahman', 'Cardiologist', 'Cardiology', 'MBBS, FCPS (Cardiology)', 'Dhaka Medical College, FCPS from Royal College of Physicians, London', male, '9:00AM - 3:00PM').
 doctor(2, 'Dr. Tanvir Hossain', 'Neurologist', 'Neurology', 'MBBS, MD (Neurology)', 'Chittagong Medical College, MD from University of Dhaka', male, '10:00 AM - 4:00 PM').
 doctor(3, 'Dr. Nusrat Jahan', 'Pediatrician', 'Pediatrics', 'MBBS, DCH (Pediatrics)', 'Sir Salimullah Medical College, DCH from BSMMU', female, '11:00 AM - 5:00 PM').
 doctor(4, 'Dr. Khalid Hasan', 'Pulmonologist', 'Respiratory', 'MBBS, FCPS (Pulmonology)', 'Rajshahi Medical College, FCPS from Bangladesh College of Physicians and Surgeons', male, '8:00 AM - 2:00 PM').
@@ -431,6 +434,8 @@ inherited_disease(Patient, Disease) :-
 diagnosed_with_disease(Patient, Disease) :-
     has_symptom(Patient, Symptom), % Find a symptom the patient has
     symptom(Symptom, Disease). % Find the disease corresponding to that symptom
+
+
 
 
 %                 PATHOLOGY DEPARTMENT RULES
